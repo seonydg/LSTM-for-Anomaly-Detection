@@ -1,3 +1,5 @@
+import torch.nn as nn
+
 class skeleton_LSTM(nn.Module):
     def __init__(self):
         super(skeleton_LSTM, self).__init__()
