@@ -1,4 +1,4 @@
-# LSTM을 활용한 CCTV 절도 이상탐지(Abnormal Detection)
+# LSTM & YOLO를 활용한 CCTV 절도 이상탐지(Abnormal Detection)
 
 ## 목차
   **1. 프로젝트 기획 이유**
@@ -17,7 +17,7 @@
 
 
 ## 1. 프로젝트 기획 이유
- modle : LSTM(Long Short-Term Memory) & YOLOv5
+ **model : LSTM(Long Short-Term Memory) & YOLOv5**
 
 CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이유는 다음과 같습니다.
 - **1. 보안 및 안전 강화 :** 범죄 예방과 안전 보안은 중요한 사회적 문제입니다. AI가 발전함에 따라 무인 편의점, 무인 카페 등이 생겨나는 동시에 절도 등의 범죄도 증가하는 추세입니다. 이는 절도 뿐만 아니라 기타 범죄 및 사고, 자살 등 안전과 관련하여 영상(CCTV 등)을 활용한 이상탐지 시스템은 범죄 예방 및 안전 강화에 기여할 수 있으며, 이는 도시 및 지역의 안전성을 향상시킬 수 있을 것이라 기대하였기 때문입니다.
@@ -26,4 +26,40 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 - **4. 비용 절감 :** 이상탐지 시스템은 인적 자원에 의존하지 않고도 보안을 유지할 수 있으므로 비용 효율적인 해결책이 될 것입니다.
 - **5. 성능 향상 :** 딥러닝 기술과 컴퓨팅 성능이 향상되면서, CCTV 절도 이상탐지 시스템은 더 정교하고 효과적으로 구축될 수 있습니다. 또한 이상탐지 시스템 자체로 인해 더욱 다양한 상황과 패턴을 학습할 수 있는 데이터를 추가로 생성되기에 LSTM은 이러한 발전을 활용하여 더 정확한 이상탐지를 제공할 수 있습니다.
 
+- 사용한 프레임 워크
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/16104792-fe1b-4d2e-ad11-e7cd435882af)
 
+
+## 2. 데이터 소개 및 전처리
+
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/ee5128ae-f849-45c1-b718-9cf4bdb1e96b)
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/1753f0cf-4208-476d-a3d3-a7de279d4b40)
+- **AI Hub**에서 CCTV 영상 중 **절도** 데이터만 선별
+
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/2dbbd5f7-4064-4450-a013-7f103edd859e)
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/401daead-259a-4780-830d-91720d73c8cd)
+
+- 데이터: 1개의 데이터는 평균 1분(fps:3) 영상
+- 1분 개별 영상에서 10초 내외로 **절도 행위**를 하는 영상이 많아 10초로 끊어서 개별 데이터 생성.
+- 절도 행위의 빈도를 확인하여, 같은 영상에서 일반 영상도 같은 빈도로 clip하여 추출.
+
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/ce191e0b-bf6e-428b-a84c-1945c7e4d4f0)
+- 10초를 기준으로 clip/추출한 영상 데이터를, mediapipe 에서 사람의 landmark의 부위를 선정하여 x, y 좌표를 추출하여 모델에 넣을 데이터 확보.
+- 추출한 x, y 좌표의 움직임 패턴을 학습시켜 이상탐지를 할 계획.
+
+## 3. 모델링
+
+**LSTM**
+
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/725a71e5-8ac9-4c81-bd5a-6270fcc96bb1)
+
+- 시간 순서에 따른 패턴을 학습시키니 위해 RNN(순환신경망) 계열 사용.
+- RNN 문제점 : RNN hidden layers들은 같은 weight를 공유하며 엣지로 연결되어 순환구조를 이룬다. input weight와 hidden layers에서 공유되는 weight를 연산하여 output으로 데이터를 보낸다. 이 때 hidden layer에서 같은 weight 공유하기에 hidden layer 연산 과정에서 weight 연산이 1보다 크다면 **Gradient Exploding**이 되어 학습이 진행되지 않고, 1보다 작으면 **Gradient Vanishing**이 되어 학습이 진행되지 않는 문제가 발생한다.
+- LSTM의 3개의 게이트와 cell state를 추가해서 **Gradient Exploding/Vanishing** 문제를 해결한다. **forget gate**(옆 레이어에서 들어오는 정보를 얼마나 잊어버릴 것인지 결정)와 **input gate**(input으로 들어오는 데이터를 얼마나 받아들일 것인지), **cell state**(forget/input 게이트에서 들어온 값을 업데이트) 3개의 게이트를 통해 들어온 데이터를 **output gate**(얼마만큼 내보낼 것인지 결정)에서 결정하여 내보낸다.
+- GRU 모델은 LSTM 모델에서 cell state가 빠진 모델이다.
+- 해당 프로젝트를 진행할 때는 landmark x, y 좌표를 input data로 활용할 것이기에 비교적 짧은 hidden layers 가지기에 LSTM 모델을 활용하기로 결정했다. 추후에 든 생각이지만, GRU 모델도 같이 비교를 해보았으면 더 좋았을 것이다.
+
+## 비교 분석
+
+- **여러 조건들을 비교하며 진행**
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/4404472a-6646-48c8-b56e-f7f5c634caeb)
