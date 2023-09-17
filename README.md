@@ -53,7 +53,7 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/725a71e5-8ac9-4c81-bd5a-6270fcc96bb1)
 
-- 시간 순서에 따른 패턴을 학습시키니 위해 RNN(순환신경망) 계열 사용.
+- 시간 순서에 따른 패턴을 학습시키기 위해 RNN(순환신경망) 계열 사용.
 - RNN 문제점 : RNN hidden layers들은 같은 weight를 공유하며 엣지로 연결되어 순환구조를 이룬다. input weight와 hidden layers에서 공유되는 weight를 연산하여 output으로 데이터를 보낸다. 이 때 hidden layer에서 같은 weight 공유하기에 hidden layer 연산 과정에서 weight 연산이 1보다 크다면 **Gradient Exploding**이 되어 학습이 진행되지 않고, 1보다 작으면 **Gradient Vanishing**이 되어 학습이 진행되지 않는 문제가 발생한다.
 - LSTM의 3개의 게이트와 cell state를 추가해서 **Gradient Exploding/Vanishing** 문제를 해결한다. **forget gate**(옆 레이어에서 들어오는 정보를 얼마나 잊어버릴 것인지 결정)와 **input gate**(input으로 들어오는 데이터를 얼마나 받아들일 것인지), **cell state**(forget/input 게이트에서 들어온 값을 업데이트) 3개의 게이트를 통해 들어온 데이터를 **output gate**(얼마만큼 내보낼 것인지 결정)에서 결정하여 내보낸다.
 - GRU 모델은 LSTM 모델에서 cell state가 빠진 모델이다.
