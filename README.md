@@ -1,4 +1,4 @@
-# LSTM & YOLO를 활용한 CCTV 절도 이상탐지(Abnormal Detection)
+# LSTM & YOLO를 활용한 CCTV 절도 이상탐지(Anormal Detection)
 
 ## 목차
   **1. 프로젝트 기획 이유**
@@ -63,4 +63,50 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 ## 4. 비교 분석
 
 - **여러 조건들을 비교하며 진행**
+
+- 1단계 :  object detection을 **mediapipe**만 사용하여 landmark 좌표를 찾을 것인지, **yolo**를 사용하여 detect한 후 mediapipe로 landmark를 할 것인지 비교.
+- 2단계 : 3fps 10초 시퀀스가 기본(30frame) -> 이 10초 시퀀스를 이어 붙여서(30frame * 3 = 90frame) 15frame씩 윈도우 슬라이싱하여 30frame씩 데이터 생성.
+- 3단계 : landmark 좌표를 추출할 때, 얼굴 좌표(얼굴부터 발까지)도 사용할 것인지 몸의 좌표(어깨부터 발까지)만 사용할 것인지 비교.
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/4404472a-6646-48c8-b56e-f7f5c634caeb)
+
+**1단계 :**
+- 문제 1 : **mediapipe** 사람이 아닌 다른 object를 detect하는 경우 발생. **train 데이터셋**도 문제 소지.
+  
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/cbb42c7e-d3df-46c0-b8e6-b53329e714c0)
+
+- 해결 1 : **yolo**를 통해서 사람을 먼저 detect한 후 landmark를 추출하여 사람의 landmark 좌표를 추출하도록.
+
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/47ae22ce-3305-4c28-8c29-f7f9cdd7f086)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
