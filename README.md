@@ -74,7 +74,7 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
   
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/cbb42c7e-d3df-46c0-b8e6-b53329e714c0)
 
-- 해결 1 : **yolo**를 통해서 사람을 먼저 detect한 후 landmark를 추출하여 사람의 landmark 좌표를 추출하도록.
+- 해결 1 : **yolo**를 통해서 사람을 먼저 detect한 후, 사람의 landmark 좌표를 추출하도록.
 
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/47ae22ce-3305-4c28-8c29-f7f9cdd7f086)
 
