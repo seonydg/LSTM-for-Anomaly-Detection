@@ -75,6 +75,7 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/cbb42c7e-d3df-46c0-b8e6-b53329e714c0)
 
 - 해결 1 : **yolo**를 통해서 사람을 먼저 detect한 후, 사람의 landmark 좌표를 추출하도록.
+- 주의 1 : **yolo** 적용 시 detect를 못하는 경우 landmark 좌표를 얻을 수 없는 경우도 발생. 그리고 누락이 되어 landmark를 추출하지 못해 input data의 길이가 상이한 경우가 발생하여 제일 마지막 frame을 중복으로 누적해야 하는 경우의 문제 발생(data len: 30frame : 28frame += frame[-1] 길이가 30frame가 될 때까지). 하지만 사람이 아닌 object를 detect하지 않아서 방해되는 데이터 생성을 어느 정도 막아주는 역할도 함.
 
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/47ae22ce-3305-4c28-8c29-f7f9cdd7f086)
 
