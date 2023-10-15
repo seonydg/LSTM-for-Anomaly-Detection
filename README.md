@@ -121,12 +121,25 @@ mediapipe도 기본적으로 사람을 잘 찾기에 사람을 찾는 방해물�
    - datasets_com : 이어붙인 시퀀스 사용
      - abnormal
      - normal
-2. 
+2. model
+   - model에 yolo/mediapipe/yolo+mediapipe 각각 사용
 
 
+## 7. 팀원 및 참고자료
+**팀원: 3명 공통 기여**
+1. AI HUB 데이터 make_clip
+2. 모델링 후 하이퍼파라미터 조절 배당하여 결과 비교
+
+**본인 기여 부분**
+1. 해당 프로젝트에 맞춰 참고한 model 수정 및 오류 수정
+   - landmark mark 좌표를 얻지 못하는 경우 수정
+2. yolo model 적용
+   - yolo를 적용시켜 yolo 바운딩박스 안에서만 mediapipe 적용.
 
 
-
+**참고:**
+- mediapipe tutorial : https://developers.google.com/mediapipe/solutions/about#notice
+- 블러그:https://blog.naver.com/PostView.naver?blogId=112fkdldjs&logNo=222972860886
 
 
 
