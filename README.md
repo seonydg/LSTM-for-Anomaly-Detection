@@ -83,7 +83,8 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 - 문제 2 : **yolo** 적용 시 detect를 못하는 경우 landmark 좌표를 얻을 수 없어 input data의 길이가 상이한 경우가 발생하여 input data 오류 발생.
 - 해결 2 : 제일 마지막 frame을 중복으로 누적(data len: 30frame : 28frame += frame[-1] 길이가 30frame가 될 때까지). 그래서 좌표의 패턴을 학습하기에 방해가 될 소지가 있음. 하지만 사람이 아닌 object를 detect하지 않아서 방해되는 데이터 생성을 어느 정도 막아주는 역할도 함.
 
-
+mediapipe가 사람을 찾지 못하는 환경들, 즉 탁자나 의자가 사람을 가려버리는 경우에는 yolo로 사람을 찾은 후 mediapipe 적용.
+mediapipe도 기본적으로 사람을 잘 찾기에 사람을 찾는 방해물이 없는 경우에는 mediapipe만 적용.
 
 
 
