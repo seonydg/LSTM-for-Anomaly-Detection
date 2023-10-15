@@ -94,11 +94,34 @@ mediapipe도 기본적으로 사람을 잘 찾기에 사람을 찾는 방해물�
  결론은 이어붙여 만든 시퀀스는 개별 시퀀스로 학습한 결과보다 좋지 못한 결과로 인해 개별 시퀀스를 사용하기로 함.
 
  **3단계**
- 
+ mediapipe의 landmark 좌표를 구할 때 얼굴 부분을 포함 시킬 것인지 몸 부분만 좌표를 구할 것인지 확인.
+![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/288787a8-bab0-4858-bdaa-42ed8cebf133)
+절도 행위에 얼굴의 좌표의 포함/미포함에 있어 유의미한 차이를 보이지 않는다.
+오히려 좌표가 추가되어 계산량이 많아짐.
+
+결론적으로 몸의 좌표만 사용.
 
 
+## 5. 추후 보안 방향
+1. 단일 객체의 이상행동 데이터를 기준으로 모델 개발을 했기에 다중 객체의 이상행동 탐지에 한계가 있음.
+   - 무인 카페나 편의점에서 실질적으로 사용은 어려워 보임.
+   - 단일 객체의 행동 패턴이 필요한 경우에 사용 : 은행 ATM기 앞 행동 패턴, 1인 식당 핼동 패턴 등
+   - 다중 객체 행동에 적용하려면 multi object detection과 object tracking을 결합하여 사용 : 절도 패턴은 일정할 것이기에 개개별로 적용.
+ 2. 같은 계열의 다른 모델 GRU(LSTM에서 cell state 없는 모델)
+    - GRU 모델도 같이 더 상세히 비교
+    - 간단한 비교만 진행
+      ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/a9ca5260-ec07-481d-90fd-9aa692f6bcab)
 
-
+      
+## 6. 실행
+1. data : AI HUB에서 데이터를 다운 받아서 아래의 형태로 사용
+   - datasets :  개별 시퀀스 사용
+     - abnormal
+     - normal
+   - datasets_com : 이어붙인 시퀀스 사용
+     - abnormal
+     - normal
+2. 
 
 
 
