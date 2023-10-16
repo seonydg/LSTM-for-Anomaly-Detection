@@ -49,7 +49,7 @@ CCTV 절도 이상탐지를 위해 LSTM( Long Short-Term Memory) 기획한 이�
 
 ## 3. 모델링
 
-**LSTM**
+**LSTM** 구조
 
 ![image](https://github.com/seonydg/LSTM-for-Anomaly-Detection/assets/85072322/725a71e5-8ac9-4c81-bd5a-6270fcc96bb1)
 
