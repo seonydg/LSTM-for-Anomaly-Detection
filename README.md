@@ -1,4 +1,4 @@
-# LSTM & YOLO를 활용한 CCTV 절도 이상탐지(Anormal Detection)
+# LSTM & YOLO를 활용한 CCTV 절도 이상탐지(Anormaly Detection)
 
 ## 목차
   **1. 프로젝트 기획 이유**
